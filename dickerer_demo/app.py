@@ -135,6 +135,10 @@ def create_app(data_path: Path | None = None, model=None, gateway_key: str | Non
             "Referrer-Policy": "no-referrer", "X-Frame-Options": "DENY",
             "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'",
         })
+        if request.url.path == "/static/panel.html":
+            response.headers["X-Frame-Options"] = "SAMEORIGIN"
+            response.headers["Content-Security-Policy"] = response.headers["Content-Security-Policy"].replace(
+                "frame-ancestors 'none'", "frame-ancestors 'self'")
         return response
 
     @app.exception_handler(HTTPException)

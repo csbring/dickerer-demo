@@ -97,6 +97,15 @@ def test_gateway_key_required(tmp_path):
         assert client.get("/api/scenarios", headers={"X-Demo-Gateway":"test-only-shared-secret"}).status_code == 200
 
 
+def test_only_sidebar_document_allows_same_origin_embedding(client):
+    panel = client.get("/static/panel.html")
+    assert panel.status_code == 200
+    assert panel.headers["x-frame-options"] == "SAMEORIGIN"
+    assert "frame-ancestors 'self'" in panel.headers["content-security-policy"]
+    assert client.get("/").headers["x-frame-options"] == "DENY"
+    assert client.get("/api/scenarios").headers["x-frame-options"] == "DENY"
+
+
 def test_model_outage_is_recoverable_without_fake_transcript(tmp_path):
     model = Model(fail=True)
     with TestClient(create_app(tmp_path/"test.sqlite", model, gateway_key="")) as client:

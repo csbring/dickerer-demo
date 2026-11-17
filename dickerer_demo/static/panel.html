@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Dickerer</title>
+    <link rel="stylesheet" href="panel.css" />
+    <script src="panel.js" defer></script>
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand-mark" aria-hidden="true">D</div>
+      <div>
+        <h1>Dickerer</h1>
+        <p>One who argues about pennies</p>
+      </div>
+      <span class="demo-pill">DEMO</span>
+    </header>
+    <main>
+      <section class="page-card">
+        <span class="status-dot" id="status-dot"></span>
+        <div>
+          <strong id="page-status">Looking for a listing…</strong>
+          <p id="page-detail">Open the demo marketplace to get started.</p>
+        </div>
+      </section>
+      <div id="error" class="error hidden" role="alert"></div>
+      <button id="analyze" class="primary" type="button" disabled>
+        Analyze this listing <span>→</span>
+      </button>
+      <div id="analysis" class="hidden">
+        <section class="section-card">
+          <div class="section-title">
+            Current listing <span class="pill">SCENARIO DATA</span>
+          </div>
+          <h2 id="product-name">—</h2>
+          <div class="price-row">
+            <span>Asking price</span><strong id="asking">—</strong>
+          </div>
+          <div class="price-row">
+            <span>Illustrative comparisons</span
+            ><strong id="market-range">—</strong>
+          </div>
+          <p id="listing-insight" class="muted"></p>
+          <p class="fine-print">
+            Fictional comparison prices, not live or sold listings.
+          </p>
+        </section>
+        <section class="section-card">
+          <div class="section-title">
+            Your price plan <span class="pill">PRIVATE</span>
+          </div>
+          <form id="setup-form">
+            <div class="price-fields">
+              <div>
+                <label for="target">Target price</label>
+                <div class="money-field">
+                  <span>$</span
+                  ><input
+                    id="target"
+                    type="number"
+                    min="20"
+                    step="1"
+                    required
+                  />
+                </div>
+              </div>
+              <div>
+                <label for="budget">Walk-away limit</label>
+                <div class="money-field">
+                  <span>$</span
+                  ><input
+                    id="budget"
+                    type="number"
+                    min="20"
+                    step="1"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+            <p class="fine-print">
+              Code rejects offers above your limit. These settings are not
+              supplied to the seller.
+            </p>
+            <label for="brief">Instructions for Dickerer</label
+            ><textarea
+              id="brief"
+              rows="3"
+              maxlength="280"
+              placeholder="What matters to you? Pickup timing, condition, accessories…"
+            ></textarea>
+            <p class="fine-print">
+              Use fictional details. Don’t enter personal information.
+            </p>
+            <button id="run" type="submit" class="primary">
+              <span id="run-label">Negotiate for me</span><span>→</span>
+            </button>
+          </form>
+          <p class="fine-print simulation-boundary">
+            Automatic messages go only to this simulated seller.
+          </p>
+          <div class="controls">
+            <button id="pause" type="button" class="secondary" disabled>
+              Pause</button
+            ><button id="step" type="button" class="secondary" disabled>
+              One reply</button
+            ><button id="end" type="button" class="quiet" disabled>End</button>
+          </div>
+          <p id="activity" class="activity" role="status">
+            Ready when you are.
+          </p>
+        </section>
+        <section class="section-card" id="strategy-card">
+          <div class="section-title">
+            Negotiation coach <span id="turn-count" class="pill">READY</span>
+          </div>
+          <h3 id="tactic">Start with the facts</h3>
+          <p id="reason" class="muted">
+            Set your limits and let Dickerer make a considered opening.
+          </p>
+          <blockquote id="latest-reply" class="hidden"></blockquote>
+          <div class="latest-prices">
+            <div>
+              <span>Your latest offer</span><strong id="buyer-latest">—</strong>
+            </div>
+            <div>
+              <span>Seller’s latest</span><strong id="seller-latest">—</strong>
+            </div>
+          </div>
+          <p class="fine-print">
+            The chat stays on the marketplace page. Your strategy stays here.
+          </p>
+        </section>
+        <section
+          id="outcome"
+          class="outcome hidden"
+          aria-live="polite"
+        ></section>
+        <details id="debrief" class="hidden">
+          <summary>Seller debrief · after the negotiation</summary>
+          <p id="debrief-copy"></p>
+        </details>
+        <div class="bottom-actions">
+          <button id="reset" type="button" class="secondary hidden">
+            Reset & delete this session</button
+          ><button id="export" type="button" class="quiet hidden">
+            Download conversation ↓
+          </button>
+        </div>
+      </div>
+      <footer>
+        <p id="connection">Local model · Separate buyer and seller roles</p>
+        <details>
+          <summary id="extension-label">
+            Use the actual browser extension
+          </summary>
+          <p>
+            Chrome or Edge: download and unzip the demo extension. Open your
+            browser’s extensions page, enable Developer mode, then choose Load
+            unpacked. Open this marketplace demo and click the extension’s
+            toolbar icon.
+          </p>
+          <a id="extension-download" href="dickerer-sidebar.zip" download
+            >Download demo extension ↓</a
+          >
+          <p>
+            The installable extension works only on this fictional demo. The
+            wider marketplace product is still in development.
+          </p>
+        </details>
+      </footer>
+    </main>
+  </body>
+</html>

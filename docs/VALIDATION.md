@@ -10,3 +10,12 @@ This record describes the bounded demo, not validation of the full Dickerer prod
 - The public gateway served the interface and model-readiness check, and rejected a non-allowlisted route. The backend requires the gateway key; session access requires a separate bearer token.
 
 Outcomes vary between model runs. Prices and comparable ranges are fictional scenario data. Model explanations and prose are fallible even when numeric constraints pass. The hosted workstation and Ollama must be available for live negotiation.
+
+## Marketplace sidebar revision
+
+- Dickerer is confined to the sidebar; the main page contains a fictional marketplace listing and buyer/seller chat. Buyer messages are displayed as “You”.
+- The sidebar restores the original extension's dark-green visual direction and its listing-analysis → private price plan → negotiation workflow. Analysis reads scenario data; it does not claim a new live-market appraisal.
+- 26 API/domain/model tests passed. Only the local sidebar document permits same-origin embedding; the main page and API retain framing restrictions.
+- Browser checks passed for analysis, private configuration, pause, one-message stepping, reload recovery, agreement, transcript download, reset, alternate listings, sidebar open/close and mobile layout, with no page errors.
+- Loaded the actual Manifest V3 package in Chromium. Verified its native `sidePanel` registration, toolbar behavior, extension messaging through the allowlisted content script, and automatic removal of the embedded preview. A real local-model buyer message reached the marketplace chat through the extension. Switching to an unsupported tab cleared the sidebar and disabled actions.
+- The extension archive contains exactly six local source files. It requests `sidePanel` and `activeTab`, injects only on the fictional public demo, and receives neither the API bearer token nor the gateway key.

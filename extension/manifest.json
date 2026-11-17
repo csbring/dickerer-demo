@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "minimum_chrome_version": "116",
+  "name": "Dickerer — Marketplace Demo",
+  "version": "0.2.0",
+  "description": "Dickerer in a real browser sidebar, connected only to its fictional marketplace negotiation demo.",
+  "permissions": ["sidePanel", "activeTab"],
+  "background": { "service_worker": "background.js" },
+  "action": { "default_title": "Open Dickerer" },
+  "side_panel": { "default_path": "panel.html" },
+  "content_scripts": [
+    {
+      "matches": ["https://cbring.synology.me/dickerer/*"],
+      "js": ["bridge.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
