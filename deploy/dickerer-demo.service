@@ -1,0 +1,21 @@
+[Unit]
+Description=Dickerer public negotiation demo
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/dickerer-demo
+EnvironmentFile=%h/.config/dickerer-demo/runtime.env
+ExecStart=%h/dickerer-demo/.venv/bin/python -m dickerer_demo.app
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=15
+NoNewPrivileges=true
+PrivateTmp=true
+UMask=0077
+MemoryMax=768M
+TasksMax=64
+
+[Install]
+WantedBy=default.target

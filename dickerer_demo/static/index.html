@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Give Dickerer a budget. Watch a local AI buyer negotiate with an independent AI seller in a fictional marketplace demo."
+    />
+    <meta name="theme-color" content="#f5f4ee" />
+    <meta name="api-base" content="" />
+    <title>Dickerer — The negotiation lab</title>
+    <link rel="icon" href="static/icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="static/styles.css" />
+    <script src="static/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip" href="#workspace">Skip to negotiation</a>
+    <header class="masthead">
+      <a class="brand" href="./" aria-label="Dickerer home"
+        ><img src="static/icon.svg" width="32" height="32" alt="" /><span
+          >dickerer<span class="brand-dot">.</span></span
+        ></a
+      >
+      <nav aria-label="Main">
+        <a href="#how-it-works">How it works</a
+        ><a
+          href="https://github.com/csbring/dickerer-demo"
+          target="_blank"
+          rel="noopener noreferrer"
+          >View source <span aria-hidden="true">↗</span></a
+        ><span class="demo-tag">INTERACTIVE DEMO</span>
+      </nav>
+    </header>
+    <main>
+      <section class="intro" aria-labelledby="title">
+        <div>
+          <p class="eyebrow">
+            <span class="tiny-star">✳</span> YOUR BUDGET. ITS BACK-AND-FORTH.
+          </p>
+          <h1 id="title">
+            Let your offer<br />do the talking<span class="green-dot">.</span>
+          </h1>
+        </div>
+        <div class="intro-copy">
+          <p>
+            Meet your AI buying copilot. Set the limits, pick a seller, and
+            watch Dickerer work toward a better deal.
+          </p>
+          <div class="model-status">
+            <span class="status-dot" id="status-dot"></span
+            ><span id="model-status">Connecting to the negotiation lab…</span>
+          </div>
+          <p class="simulation-note">
+            A fictional marketplace. Two local AI agents. No real purchases.
+          </p>
+        </div>
+      </section>
+      <section
+        id="workspace"
+        class="workspace"
+        aria-label="Negotiation workspace"
+      >
+        <aside class="setup-panel panel">
+          <div class="panel-heading">
+            <span class="step-number">01</span>
+            <h2>Set the scene</h2>
+            <span class="mini-label">USD</span>
+          </div>
+          <label class="field-label" for="scenario">THE LISTING</label>
+          <select id="scenario" aria-label="Choose a fictional listing">
+            <option value="camera">Mirrorless camera kit</option>
+            <option value="chair">Ergonomic office chair</option>
+            <option value="headphones">Wireless studio headphones</option>
+          </select>
+          <div class="product-art" id="product-art" aria-hidden="true"></div>
+          <div class="listing-heading">
+            <div>
+              <p class="eyebrow small" id="category">PHOTO & VIDEO</p>
+              <h3 id="listing-title">Mirrorless camera kit</h3>
+            </div>
+            <div class="asking">
+              <span id="asking-price">$480</span><small>asking price</small>
+            </div>
+          </div>
+          <ul id="facts" class="facts"></ul>
+          <div class="comps">
+            <span>Illustrative comparison range</span
+            ><strong id="market-range">$370–$420</strong
+            ><small>Scenario data, not live market prices</small>
+          </div>
+          <form id="setup-form">
+            <div class="money-fields">
+              <div>
+                <label for="target">Your target</label>
+                <div class="money-input">
+                  <span>$</span
+                  ><input
+                    id="target"
+                    name="target"
+                    type="number"
+                    min="20"
+                    max="480"
+                    step="1"
+                    value="375"
+                    required
+                    inputmode="numeric"
+                  />
+                </div>
+              </div>
+              <div>
+                <label for="budget"
+                  >Hard limit
+                  <span
+                    title="Dickerer cannot offer above this amount."
+                    aria-label="Enforced by code"
+                    >⌁</span
+                  ></label
+                >
+                <div class="money-input">
+                  <span>$</span
+                  ><input
+                    id="budget"
+                    name="budget"
+                    type="number"
+                    min="20"
+                    max="480"
+                    step="1"
+                    value="400"
+                    required
+                    inputmode="numeric"
+                  />
+                </div>
+              </div>
+            </div>
+            <p class="private-note">
+              Your limits stay private from the seller agent.
+            </p>
+            <label for="persona">Seller personality</label
+            ><select id="persona" name="persona">
+              <option value="balanced">
+                Reasonable · open to a fair offer
+              </option>
+              <option value="firm">Firm on price · happy to wait</option>
+              <option value="quick">Ready to move · values convenience</option>
+            </select>
+            <label for="brief"
+              >Your instructions <span class="optional">optional</span></label
+            ><textarea
+              id="brief"
+              name="brief"
+              rows="2"
+              maxlength="280"
+              placeholder="e.g. I can pick up this weekend, after inspection."
+            >
+I can collect locally this weekend after inspecting the item.</textarea
+            >
+            <p class="private-note">
+              Use fictional details; avoid personal information.
+            </p>
+            <button class="primary" id="run" type="submit">
+              <span id="run-label">Start negotiation</span
+              ><span aria-hidden="true">↗</span>
+            </button>
+          </form>
+          <button class="text-button hidden" id="reset" type="button">
+            ↺ &nbsp;Try another negotiation
+          </button>
+        </aside>
+        <section
+          class="conversation-panel panel"
+          aria-labelledby="conversation-title"
+        >
+          <div class="panel-heading">
+            <span class="step-number">02</span>
+            <h2 id="conversation-title">The conversation</h2>
+            <span id="turn-count" class="mini-label">READY WHEN YOU ARE</span>
+          </div>
+          <div class="participants">
+            <div>
+              <span class="avatar buyer-avatar">d.</span
+              ><span
+                ><strong>Dickerer</strong
+                ><small>Negotiating for you</small></span
+              >
+            </div>
+            <span class="vs">↔</span>
+            <div>
+              <span><strong>Alex</strong><small>Simulated seller</small></span
+              ><span class="avatar seller-avatar">A</span>
+            </div>
+          </div>
+          <div
+            id="transcript"
+            class="transcript"
+            role="log"
+            aria-label="Negotiation messages"
+            aria-live="polite"
+            aria-relevant="additions"
+          >
+            <div class="empty-state" id="empty-state">
+              <div class="conversation-symbol" aria-hidden="true">
+                <span>“</span><span>”</span>
+              </div>
+              <p class="eyebrow">A LITTLE GIVE. A LITTLE TAKE.</p>
+              <h3>Good deals start<br />with a conversation.</h3>
+              <p>
+                Set your budget on the left.<br />Dickerer will make the first
+                move.
+              </p>
+              <div class="empty-rule">
+                Your ceiling is a rule, not a suggestion.
+              </div>
+            </div>
+          </div>
+          <div id="error" class="error hidden" role="alert"></div>
+          <div id="outcome" class="outcome hidden" aria-live="polite"></div>
+          <div class="conversation-controls">
+            <div id="activity" role="status">
+              Every reply is generated live.
+            </div>
+            <div class="control-buttons">
+              <button id="step" class="secondary" type="button" disabled>
+                Next message</button
+              ><button id="pause" class="secondary" type="button" disabled>
+                Pause</button
+              ><button id="end" class="text-button" type="button" disabled>
+                End
+              </button>
+            </div>
+          </div>
+          <div class="conversation-footnote">
+            Up to 6 rounds · Pausing lets the current reply finish · No messages
+            leave this simulation
+          </div>
+        </section>
+        <aside class="insights-panel panel" aria-labelledby="insights-title">
+          <div class="panel-heading">
+            <span class="step-number">03</span>
+            <h2 id="insights-title">The playbook</h2>
+          </div>
+          <div class="insight-intro">
+            <span class="spark" aria-hidden="true">✳</span>
+            <h3>See the thinking<br />behind the offer.</h3>
+            <p>A concise explanation from your buying agent after each move.</p>
+          </div>
+          <div class="strategy-card">
+            <p class="field-label">CURRENT APPROACH</p>
+            <strong id="tactic">Start with the facts</strong>
+            <p id="reason">
+              Dickerer uses the listing’s condition, illustrative comparisons
+              and your instructions to choose an opening.
+            </p>
+          </div>
+          <div class="price-track">
+            <div>
+              <span>Seller's latest</span
+              ><strong id="seller-latest">$480</strong>
+            </div>
+            <div>
+              <span>Your latest</span><strong id="buyer-latest">—</strong>
+            </div>
+            <div class="budget-line">
+              <span>Your hard limit</span
+              ><strong id="limit-latest">$400</strong>
+            </div>
+          </div>
+          <div class="offer-chart">
+            <p class="field-label">THE PRICE GAP</p>
+            <svg
+              id="chart"
+              viewBox="0 0 240 108"
+              role="img"
+              aria-label="Offer history appears here"
+            ></svg>
+            <div class="chart-legend">
+              <span><i class="buyer-key"></i>Dickerer</span
+              ><span><i class="seller-key"></i>Seller</span>
+            </div>
+          </div>
+          <div class="guardrail">
+            <span aria-hidden="true">✓</span>
+            <div>
+              <strong>Budget protected by code</strong>
+              <p>
+                Over-budget offers are rejected before they reach the seller.
+              </p>
+            </div>
+          </div>
+          <details id="debrief" class="hidden">
+            <summary>Reveal the seller's side</summary>
+            <p id="debrief-copy"></p>
+          </details>
+          <button id="export" class="text-button hidden" type="button">
+            ↓ &nbsp;Download this conversation
+          </button>
+        </aside>
+      </section>
+      <section
+        id="how-it-works"
+        class="explainer"
+        aria-label="How the demo works"
+      >
+        <div>
+          <p class="eyebrow">THE METHOD, NOT THE MAGIC.</p>
+          <h2>Independent agents.<br />Shared conversation.</h2>
+          <p>
+            The buyer knows your limits. The seller has its own price floor.
+            Neither receives the other’s private instructions.
+          </p>
+        </div>
+        <ol>
+          <li>
+            <span>01</span>
+            <div>
+              <h3>You set the boundaries</h3>
+              <p>
+                Choose a target, a maximum and what you can offer besides money.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span>02</span>
+            <div>
+              <h3>Two agents find their footing</h3>
+              <p>
+                A local model plays each role in a separate context. Offers and
+                replies are generated for this session.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span>03</span>
+            <div>
+              <h3>A deal—or a good reason to leave</h3>
+              <p>
+                A tough seller can mean no agreement. The demo doesn’t force a
+                win or promise real-world savings.
+              </p>
+            </div>
+          </li>
+        </ol>
+      </section>
+    </main>
+    <footer>
+      <a class="brand small-brand" href="./">dickerer.</a>
+      <p>
+        A working negotiation demo. The broader buying copilot is still in
+        development.<br />Sessions expire after 24 hours. Reset deletes your
+        session. Don’t enter personal information.
+      </p>
+      <a
+        href="https://github.com/csbring/dickerer-demo"
+        target="_blank"
+        rel="noopener noreferrer"
+        >Explore the code ↗</a
+      >
+    </footer>
+  </body>
+</html>
